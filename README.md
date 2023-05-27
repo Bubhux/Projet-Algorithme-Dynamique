@@ -83,6 +83,7 @@ pip install -r requirements.txt
 ## Exécution du programme   
 ### Algorithme bruteforce   
 
+-Placez-vous avec le terminal dans le dossier Bruteforce.   
 **-Taper dans votre terminal la commande:**   
 ```bash   
     python bruteforce.py
@@ -96,6 +97,8 @@ pip install -r requirements.txt
 - Une barre de progression est affichée pendant que le graphique est généré.   
 
 ### Algorithme dynamique   
+
+-Placez-vous avec le terminal dans le dossier Dynamique.   
 **-Taper dans votre terminal la commande:**   
 ```bash   
     python optimized.py
@@ -112,17 +115,17 @@ pip install -r requirements.txt
 <div id="rapport-flake8"></div>
 
 ## Rapport avec flake8   
--Le repository contient un rapport flake8, qui n'affiche aucune erreur.   
+-Le repository contient un rapport flake8, qui renvoi ```All good! No flake8 errors found in 2 files scanned```.   
 -Il est possible d'en générer un nouveau en installant le module ```flake8``` s'il n'est pas installé.   
 **-Installation de flake8 en entrant dans votre terminal la commande:**   
 ```bash
-pip intall flake8-html
+pip install flake8-html
 ```
-- Créer un fichier ```setup.cfg``` si il n'existe pas.   
-- **Ecrire le texte suivant dedans:**   
+- Créer un fichier ```.flake8``` si il n'existe pas.   
+- **-Ecrire le texte suivant dedans:**   
 ```bash
 [flake8]
-exclude = .git, env, __pycache__, .gitignore
+exclude = .git, env, .gitignore
 max-line-length = 119
 ```
 **-Tapez dans votre terminal la commande:**   
@@ -143,6 +146,15 @@ flake8 --format=html --htmldir=flake-report
     - l'analyse des performances et de l'efficacité des algorithmes.   
     - Un rapport d'exploration de l'ensemble des données.   
     - Une comparaison côte à côte entre la sortie de mes algorithmes et ceux proposés par ma collaboratrice.   
+
+-Le dossier Bruteforce   
+    Le dossier contient le fichier ```bruteforce.py``` ainsi que 3 fichiers csv.   
+
+-Le dossier Dynamique   
+    Le dossier contient le fichier ```optimized.py``` ainsi que 3 fichiers csv.   
+
+-Le dossier flake8   
+    Le dossier contient un fichier ```index.html``` qui indique qu'il n'y a aucune erreur.   
 
 <div id="auteur-contact"></div>
 
