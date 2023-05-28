@@ -86,7 +86,7 @@ pip install -r requirements.txt
 -Placez-vous avec le terminal dans le dossier Bruteforce.   
 **-Taper dans votre terminal la commande:**   
 ```bash   
-    python bruteforce.py
+python bruteforce.py
 ```   
 **Le montant d'investissement par défaut est fixé à 500€.**   
 *Note : Le bruteforce ne traîte que les données du fichier "dataset3.csv", contenant 20 actions. Les dataset1 et dataset2 résulteraient à un temps   d'exécution extrêmement long.*   
@@ -101,7 +101,7 @@ pip install -r requirements.txt
 -Placez-vous avec le terminal dans le dossier Dynamique.   
 **-Taper dans votre terminal la commande:**   
 ```bash   
-    python optimized.py
+python optimized.py
 ```   
 - Après le lancement du fichier optimized.py le programme, vous demande de sélectionner un fichier de votre choix :   
 - dataset1.csv (1000 actions)   
