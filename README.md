@@ -60,8 +60,8 @@ Un répertoire appelé env doit être créé.
 ```bash 
 env\Scripts\activate.bat
 ```   
-- Ce qui ajoutera à chaque ligne de commande de votre terminal (env):   
-- **-Pour désactiver l'environnement virtuel, il suffit de taper dans votre terminal:**   
+-Ce qui ajoutera à chaque ligne de commande de votre terminal (env):   
+**-Pour désactiver l'environnement virtuel, il suffit de taper dans votre terminal:**   
 ```bash  
 deactivate
 ```   
@@ -122,7 +122,7 @@ python optimized.py
 pip install flake8-html
 ```
 - Créer un fichier ```.flake8``` si il n'existe pas.   
-- **-Ecrire le texte suivant dedans:**   
+- **Ecrire le texte suivant dedans:**   
 ```bash
 [flake8]
 exclude = .git, env, .gitignore
@@ -137,24 +137,24 @@ flake8 --format=html --htmldir=flake-report
 <div id="informations-importantes"></div>
 
 ## Informations importantes sur les différents fichiers et dossiers   
--Diapositives.pdf   
+-**Diapositives.pdf**   
     Le fichier contient un jeu de diapositives ([version PDF](Diapositives.pdf)).   
     - Le pseudocode LDA "Langage de Description d'Algorithmes" décrivant le processus de réflexion   
       de l'algorithme bruteforce et dynamique.   
-    - l'analyse de l'algorithme de bruteforce.   
-    - l'analyse de l'algorithme dynamiqye.   
-    - l'analyse des performances et de l'efficacité des algorithmes.   
+    - L'analyse de l'algorithme de bruteforce.   
+    - L'analyse de l'algorithme dynamiqye.   
+    - L'analyse des performances et de l'efficacité des algorithmes.   
     - Un rapport d'exploration de l'ensemble des données.   
     - Une comparaison côte à côte entre la sortie de mes algorithmes et ceux proposés par ma collaboratrice.   
 
--Le dossier Bruteforce   
-    Le dossier contient le fichier ```bruteforce.py``` ainsi que 3 fichiers csv.   
+-**Le dossier Bruteforce**   
+    Le dossier contient le fichier ([bruteforce.py](Bruteforce/bruteforce.py)) ainsi que 3 fichiers csv.   
 
--Le dossier Dynamique   
-    Le dossier contient le fichier ```optimized.py``` ainsi que 3 fichiers csv.   
+-**Le dossier Dynamique**   
+    Le dossier contient le fichier ([optimized.py](Dynamique/optimized.py)) ainsi que 3 fichiers csv.   
 
--Le dossier flake8   
-    Le dossier contient un fichier ```index.html``` qui indique qu'il n'y a aucune erreur.   
+-**Le dossier flake8**   
+    Le dossier contient un fichier ([index.html](flake-report/index.html)) qui indique qu'il n'y a aucune erreur.   
 
 <div id="auteur-contact"></div>
 
