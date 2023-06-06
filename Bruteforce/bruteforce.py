@@ -76,7 +76,7 @@ def method_bruteforce(actions: List[Tuple[str, List[float]]],
             total_cost = sum(action[1] for action in combination)
             if total_cost <= max_cost:
                 # Calculer le bénéfice total de la combinaison
-                total_profit = total_profit = sum(action[1] * action[2] / 100 for action in combination)
+                total_profit = sum(action[1] * action[2] / 100 for action in combination)
                 # Mettre à jour la meilleure combinaison si elle est meilleure que la précédente
                 if total_profit > best_profit:
                     best_combination = list(combination)
