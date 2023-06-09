@@ -11,7 +11,7 @@
 
 <div id="informations-generales"></div>
 
-## OpenClassrooms projet 7   
+## Éléments du projet   
 - Ce programme est développé en Python est a pour objectif d'optimiser les investissements en utilisant des algorithmes.   
   Afin de générer davantage de bénéfice.   
 - 2 méthodes ont été développées.  
