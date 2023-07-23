@@ -26,7 +26,7 @@ def read_csv(filename: str) -> List[Tuple[str, List[float]]]:
             print(f"Erreur : le fichier CSV ne contient pas les colonnes requises : {required_columns}")
             return None
 
-        # Création d'un dictionnaire contenant les actions
+        # Création d'une liste contenant les actions
         actions = []
         for row in df.itertuples(index=False):
             action = (row.name, float(row.price), float(row.profit))
@@ -66,7 +66,8 @@ def method_bruteforce(actions: List[Tuple[str, List[float]]],
 
     # Génération de toutes les combinaisons possibles d'actions
     for i in tqdm(range(1, len(actions) + 1), desc="Calcul en cours", disable=not show_progress):
-        start_time = time.time()  # Mesurer le temps d'exécution pour chaque taille d'entrée
+        # Mesurer le temps d'exécution pour chaque taille d'entrée
+        start_time = time.time()
         # Générer toutes les combinaisons d'actions de taille i
         combinations = itertools.combinations(actions, i)
         for combination in tqdm(combinations, desc="Calcul en cours", leave=False, disable=not show_progress):
@@ -75,7 +76,7 @@ def method_bruteforce(actions: List[Tuple[str, List[float]]],
             total_cost = sum(action[1] for action in combination)
             if total_cost <= max_cost:
                 # Calculer le bénéfice total de la combinaison
-                total_profit = total_profit = sum(action[1] * action[2] / 100 for action in combination)
+                total_profit = sum(action[1] * action[2] / 100 for action in combination)
                 # Mettre à jour la meilleure combinaison si elle est meilleure que la précédente
                 if total_profit > best_profit:
                     best_combination = list(combination)
