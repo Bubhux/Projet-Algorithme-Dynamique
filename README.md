@@ -1,3 +1,5 @@
+[![forthebadge](https://forthebadge.com/images/badges/made-with-python.svg)](https://forthebadge.com)
+
 # Menu   
 1. **[Informations générales](#informations-generales)**   
 2. **[Liste pré-requis](#liste-pre-requis)**   
