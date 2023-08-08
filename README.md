@@ -1,5 +1,4 @@
-[![forthebadge](https://forthebadge.com/images/badges/made-with-python.svg)](https://forthebadge.com)
-
+![Static Badge](https://img.shields.io/badge/BUILD_WITH-PYTHON-red?style=for-the-badge&logo=python)
 # Menu   
 1. **[Informations générales](#informations-generales)**   
 2. **[Liste pré-requis](#liste-pre-requis)**   
