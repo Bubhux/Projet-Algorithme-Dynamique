@@ -2,9 +2,6 @@
 
 <div id="top"></div>
 
-=======
-![Static Badge](https://img.shields.io/badge/BUILD_WITH-PYTHON-red?style=for-the-badge&logo=python)
->>>>>>> cc04e63ecf5cae2b38ffb2da7907cc4991bddbbd
 # Menu   
 1. **[Informations générales](#informations-generales)**   
 2. **[Liste pré-requis](#liste-pre-requis)**   
@@ -149,7 +146,7 @@ pip install flake8-html
 exclude = .git, env, .gitignore
 max-line-length = 119
 ```
-**-Tapez dans votre terminal la commande:**   
+**Tapez dans votre terminal la commande:**   
 ```bash
 flake8 --format=html --htmldir=flake-report
 ```
