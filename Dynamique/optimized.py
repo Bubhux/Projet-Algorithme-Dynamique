@@ -3,9 +3,14 @@ import time
 import humanize
 import psutil
 import matplotlib.pyplot as plt
+import click
+from rich.console import Console
+from rich.table import Table
 from tqdm import tqdm
-from tabulate import tabulate
 from typing import List, Tuple
+
+
+console = Console()
 
 
 def read_csv(filename: str) -> List[Tuple[str, int, float]]:
@@ -170,45 +175,30 @@ def measure_memory_usage():
     return memory_info.rss
 
 
+@click.command()
 def main() -> None:
-    """Fonction principale pour lancer le prorgamme"""
+    """Fonction principale pour lancer le programme"""
 
-    # Demande à l'utilisateur de choisir un fichier
-    choice = input("Choisissez un fichier :\n"
-                   "1. dataset1.csv (1000 actions)\n"
-                   "2. dataset2.csv (1000 actions)\n"
-                   "3. dataset3.csv (20 actions)\n"
-                   "> ")
+    # Affichage des options de fichiers disponibles
+    console.print()
+    console.print("Choisissez un fichier :", style="bold blue")
+    console.print("1. dataset1.csv (1000 actions)")
+    console.print("2. dataset2.csv (1000 actions)")
+    console.print("3. dataset3.csv (20 actions)")
+    choice = click.prompt("> ", type=click.Choice(["1", "2", "3"]))
 
-    # Vérifie que l'utilisateur a choisi un choix valide
-    while choice not in ["1", "2", "3"]:
-        print("Choix invalide, saisissez 1 ou 2 ou 3.")
-        choice = input("> ")
+    filenames = {
+        "1": "dataset1.csv",
+        "2": "dataset2.csv",
+        "3": "dataset3.csv",
+    }
+    filename = filenames[choice]
 
-    # Définit le nom du fichier en fonction du choix de l'utilisateur
-    if choice == "1":
-        filename = "dataset1.csv"
-    elif choice == "2":
-        filename = "dataset2.csv"
-    else:
-        filename = "dataset3.csv"
-
-    # Demander à l'utilisateur le montant maximal à investir
-    print("Si vous souhaitez choisir un montant différent de 500€.")
-    max_invest_input = (
-        input("Entrez le montant maximal à investir, "
-              "sinon appuyer sur entrée le montant par défaut sera choisi. \n> ")
+    max_invest_input = click.prompt(
+        "Entrez le montant maximal à investir (500€ par défaut)",
+        default=500,
+        type=float,
     )
-
-    # Si l'utilisateur a entré un montant, vérifier qu'il est valide
-    if max_invest_input:
-        max_invest = float(max_invest_input)
-        # Vérifier que max_invest est un nombre valide
-        if not isinstance(max_invest, (int, float)):
-            print("Le montant entré n'est pas un nombre valide.")
-            return
-    else:
-        max_invest = 500
 
     # Lecture du fichier CSV
     actions_list = read_csv(filename)
@@ -224,57 +214,59 @@ def main() -> None:
     initial_memory_mb = initial_memory / (1024 * 1024)
 
     # Appel de la fonction algorithm_dynamic avec la liste d'actions et le budget maximal
-    selected_elements, count_combinations = algorithm_dynamic(actions_list, max_invest, show_progress=True)
+    selected_elements, count_combinations = algorithm_dynamic(
+        actions_list, max_invest_input, show_progress=True
+    )
 
     final_memory = measure_memory_usage()
     final_memory_mb = final_memory / (1024 * 1024)
 
     # Afficher les résultats
-    print(f"\nActions les plus rentables ({len(selected_elements)} actions) :\n")
+    console.print(
+        f"\nActions les plus rentables ({len(selected_elements)} actions) :\n"
+    )
 
-    price_total = []
-    profit_total = []
+    table = Table(title="Résultats")
+    table.add_column("Action", style="cyan")
+    table.add_column("Coût (€)", style="magenta")
+    table.add_column("Bénéfice (%)", style="green")
 
     for action in selected_elements:
-        price_total.append(action[1] / 100)
-        profit_total.append(action[2])
+        table.add_row(
+            action[0], '{:.2f}'.format(action[1] / 100), '{:.2f}'.format(action[2])
+        )
 
-    print(tabulate(
-        [(action[0], '{:.2f}'.format(action[1]/100), '{:.2f}'.format(action[2]))
-            for action in selected_elements],
-        headers=["Action", "Coût (€)", "Bénéfice (%)"],
-        tablefmt='psql'
-    ))
+    console.print(table)
 
-    print(f"Extraction du fichier {filename}\n")
-    print(f"Coût total de l'investissement : {sum(price_total)} €")
-    print(f"Bénéfice total sur 2 ans : {sum(profit_total):.2f} €")
-    print(f"Bénéfice total sur 2 ans en pourcentage : {((sum(profit_total)/sum(price_total))*100):.2f}%")
-    print(f"Temps d'exécution : {time.time() - start_time:.2f} secondes")
+    price_total = [action[1] / 100 for action in selected_elements]
+    profit_total = [action[2] for action in selected_elements]
+
+    console.print(f"Extraction du fichier {filename}\n", style="bold blue")
+    console.print(f"Coût total de l'investissement : {sum(price_total)} €")
+    console.print(f"Bénéfice total sur 2 ans : {sum(profit_total):.2f} €")
+    console.print(
+        f"Bénéfice total sur 2 ans en pourcentage : {((sum(profit_total)/sum(price_total))*100):.2f}%"
+    )
+    console.print(f"Temps d'exécution : {time.time() - start_time:.2f} secondes")
 
     # Utiliser intword pour afficher le nombre de combinaisons calculées
     # Avec l'unité de mesure "millions" ou "milliards"
-    print(f"Nombre de combinaisons calculées : {humanize.intword(count_combinations)}(s)\n")
+    console.print(
+        f"Nombre de combinaisons calculées : {humanize.intword(count_combinations)}(s)\n"
+    )
 
     # Mesure de l'utilisation de la RAM
-    print(f"Utilisation initiale de la mémoire : {initial_memory_mb:.2f} Mo")
-    print(f"Utilisation finale de la mémoire : {final_memory_mb:.2f} Mo\n")
+    console.print(f"Utilisation initiale de la mémoire : {initial_memory_mb:.2f} Mo")
+    console.print(f"Utilisation finale de la mémoire : {final_memory_mb:.2f} Mo\n")
 
     # Demande à l'utilisateur s'il souhaite créer un graphique
-    create_graph = input("Souhaitez-vous créer un graphique à partir des résultats ?\n"
-                         "1. Oui\n"
-                         "2. Non\n"
-                         "> ")
+    create_graph = click.confirm(
+        "Souhaitez-vous créer un graphique à partir des résultats ?", default=False
+    )
 
-    # Vérifie que l'utilisateur a choisi un choix valide
-    while create_graph not in ["1", "2"]:
-        print("Choix invalide, saisissez 1 ou 2.")
-        create_graph = input("> ")
-
-    # Définit la création du graphique en fonction du choix de l'utilisateur
-    if create_graph == "1":
+    if create_graph:
         # Création des graphiques
-        generate_graphs(actions_list, max_invest)
+        generate_graphs(actions_list, max_invest_input)
     else:
         exit()
 

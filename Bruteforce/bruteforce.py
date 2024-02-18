@@ -4,14 +4,18 @@ import time
 import humanize
 import psutil
 import math
+import click
+from rich.console import Console
+from rich.table import Table
 import matplotlib.pyplot as plt
 from tqdm import tqdm
-from tabulate import tabulate
+
 from typing import List, Tuple
 
 
 # Variable de condition pour afficher ou supprimer les barres de progression
 show_progress = True
+console = Console()
 
 
 def read_csv(filename: str) -> List[Tuple[str, List[float]]]:
@@ -165,14 +169,38 @@ def measure_memory_usage() -> int:
     return memory_info.rss
 
 
+@click.command()
 def main() -> None:
-    """Fonction principale pour lancer le prorgamme"""
+    """Fonction principale pour lancer le programme"""
+
+    # Affichage des options de fichiers disponibles
+    console.print()
+    console.print("Choisissez un fichier :", style="bold blue")
+    console.print("1. dataset1.csv (1000 actions)")
+    console.print("2. dataset2.csv (1000 actions)")
+    console.print("3. dataset3.csv (20 actions). ", end="")
+    console.print("Par défaut le fichier dataset3.csv sera utilisé.", style="bold red")
+    choice = click.prompt("> ", type=click.Choice(["1", "2", "3"]), default="3", show_default=False)
+
+    # Mappage des choix de l'utilisateur vers les noms de fichiers correspondants
+    filenames = {
+        "1": "dataset1.csv",
+        "2": "dataset2.csv",
+        "3": "dataset3.csv",
+    }
+    filename = filenames[choice]
+
+    # Demande à l'utilisateur le montant maximal à investir
+    max_invest_input = click.prompt(
+        "Entrez le montant maximal à investir (500€ par défaut)",
+        default=500,
+        type=float,
+    )
 
     # Mesure du temps d'exécution
     start_time = time.time()
 
     # Chargement des données à partir d'un fichier CSV
-    filename = "dataset3.csv"
     actions = read_csv(filename)
     if actions is None:
         exit()
@@ -182,58 +210,51 @@ def main() -> None:
 
     best_combination, best_profit, count_combinations, execution_times = method_bruteforce(
         actions,
-        max_cost=500,
+        max_cost=max_invest_input,
         show_progress=True
     )
 
     final_memory = measure_memory_usage()
     final_memory_mb = final_memory / (1024 * 1024)
 
-    # Afficher les résultats avec tabulate
-    print(f"\nActions les plus rentables ({len(best_combination)} actions) :\n")
+    # Afficher les résultats avec rich
+    console.print("\n[b]Actions les plus rentables[/b] ([cyan]" + str(len(best_combination)) + "[/cyan] actions) :")
 
-    table = []
+    table = Table(title="Résultats")
+    table.add_column("Action", style="cyan")
+    table.add_column("Coût (€)", style="magenta")
+    table.add_column("Bénéfice (%)", style="green")
+
     for action in best_combination:
-        table.append([action[0], action[1], action[2]])
-    print(tabulate(table, headers=["Action", "Coût (€)", "Bénéfice (%)"], tablefmt="psql"))
+        table.add_row(action[0], str(action[1]), "{:.2f}".format(action[2]))
 
+    console.print(table)
     total_cost = sum(action[1] for action in best_combination)
-    print(f"Coût total de l'investissement : {total_cost} euros")
+    console.print(f"Extraction du fichier {filename}\n", style="bold blue")
+    console.print(f"Coût total de l'investissement : [bold]{total_cost}[/bold] euros")
 
-    total_cost = sum(action[1] for action in best_combination)
-    print(
-        f"Bénéfice sur 2 ans : {best_profit:.2f} euros "
-        f"({best_profit / total_cost * 100:.2f}%)"
+    console.print(
+        f"Bénéfice sur 2 ans : [bold]{best_profit:.2f}[/bold] euros "
+        f"([bold]{best_profit / total_cost * 100:.2f}[/bold]%)"
     )
 
     # Afficher le temps d'exécution du programme
     end_time = time.time()
     execution_time = end_time - start_time
-    print(f"Temps d'exécution : {execution_time:.2f} secondes")
+    console.print(f"Temps d'exécution : [bold]{execution_time:.2f}[/bold] secondes")
 
     # Utiliser intword pour afficher le nombre de combinaisons calculées
     # Avec l'unité de mesure "millions" ou "milliards"
-    print(f"Nombre de combinaisons calculées : {humanize.intword(count_combinations)}(s)\n")
+    console.print(f"Nombre de combinaisons calculées : [bold]{humanize.intword(count_combinations)}[/bold](s)\n")
 
     # Mesure de l'utilisation de la RAM
-    print(f"Utilisation initiale de la mémoire : {initial_memory_mb:.2f} Mo")
-    print(f"Utilisation finale de la mémoire : {final_memory_mb:.2f} Mo\n")
+    console.print(f"Utilisation initiale de la mémoire : [bold]{initial_memory_mb:.2f}[/bold] Mo")
+    console.print(f"Utilisation finale de la mémoire : [bold]{final_memory_mb:.2f}[/bold] Mo\n")
 
     # Demande à l'utilisateur s'il souhaite créer un graphique
-    create_graph = input("Souhaitez-vous créer un graphique à partir des résultats ?\n"
-                         "1. Oui\n"
-                         "2. Non\n"
-                         "> ")
-
-    # Vérifie que l'utilisateur a choisi un choix valide
-    while create_graph not in ["1", "2"]:
-        print("Choix invalide, saisissez 1 ou 2.")
-        create_graph = input("> ")
-
-    # Définit la création du graphique en fonction du choix de l'utilisateur
-    if create_graph == "1":
+    if click.confirm("Souhaitez-vous créer un graphique à partir des résultats ?"):
         # Création des graphiques
-        generate_graphs(actions, max_cost=500)
+        generate_graphs(actions, max_cost=max_invest_input)
     else:
         exit()
 
