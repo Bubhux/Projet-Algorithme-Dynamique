@@ -30,13 +30,13 @@
 - Un algorithme bruteforce.   
 - Un algorithme dynamique.   
 
-##### Algorithme bruteforce   
+#### Algorithme bruteforce   
 
 - Ce code utilise une méthode d'énumération exhaustive, également appelée méthode de force brute.   
   Il teste toutes les combinaisons possibles d'éléments du dictionnaire "actions" pour trouver la combinaison optimale   
   qui maximise le bénéfice total tout en respectant une contrainte de coût maximum.   
 
-##### Algorithme dynamique   
+#### Algorithme dynamique   
 
 - Cet algorithme est appelé **"Knapsack problem"** (ou "problème du sac à dos" en français) résolu par programmation dynamique.   
   C'est un problème classique en optimisation combinatoire qui consiste à maximiser la valeur totale des objets que l'on peut   
@@ -128,7 +128,7 @@ $ pip install -r requirements.txt
 
 <div id="bruteforce"></div>
 
-##### Lancement algorithme bruteforce   
+#### Lancement algorithme bruteforce   
 
 - Placez-vous avec le terminal dans le dossier ``Bruteforce``.   
 
@@ -152,7 +152,7 @@ $ python bruteforce.py
 <div id="dynamique"></div>
 <a href="#top" style="float: right;">Retour en haut 🡅</a>
 
-##### Lancement algorithme dynamique   
+#### Lancement algorithme dynamique   
 
 - Placez-vous avec le terminal dans le dossier ``Dynamique``.   
 
