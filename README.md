@@ -93,7 +93,7 @@ Pour activer l'environnement virtuel créé, il vous suffit de taper dans votre 
 $ env\Scripts\activate.bat
 ```   
 
-- Ce qui ajoutera à chaque ligne de commande de votre terminal ``(env)``.
+- Ce qui ajoutera à chaque ligne de commande de votre terminal ``(env)``.   
    
 Pour désactiver l'environnement virtuel, il suffit de taper dans votre terminal :   
 
