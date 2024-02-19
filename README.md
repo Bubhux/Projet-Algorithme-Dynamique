@@ -50,6 +50,7 @@
 ### Liste pré-requis   
 
 Programme élaboré avec les logiciels suivants:   
+
 - **Python** v3.7.2 choisissez la version adaptée a votre ordinateur et système.   
 - **Python** est disponible à l'adresse suivante ➔ https://www.python.org/downloads/    
   
@@ -57,7 +58,7 @@ Programme élaboré avec les logiciels suivants:
   &nbsp;   
 
 - Les scripts **Python** s'exécutent depuis un terminal.   
-  - Pour ouvrir un terminal sur Windows, pressez la touche ```windows + r``` et entrez ```cmd```.   
+  - Pour ouvrir un terminal sur **Windows**, pressez la touche ```windows + r``` et entrez ```cmd```.   
   - Sur **Mac**, pressez la touche ```command + espace``` et entrez ```terminal```.   
   - Sur **Linux**, vous pouvez ouviri un terminal en pressant les touches ```Ctrl + Alt + T```.   
 
